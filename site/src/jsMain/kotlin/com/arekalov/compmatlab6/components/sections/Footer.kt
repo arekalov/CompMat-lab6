@@ -1,6 +1,10 @@
 package com.arekalov.compmatlab6.components.sections
 
 import androidx.compose.runtime.Composable
+import com.arekalov.compmatlab6.common.GITHUB_URI
+import com.arekalov.compmatlab6.common.StringResources.MADE_BY_STR
+import com.arekalov.compmatlab6.common.StringResources.SOURCE_CODE_STR
+import com.arekalov.compmatlab6.toSitePalette
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.WhiteSpace
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -19,12 +23,11 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.dom.Span
-import com.arekalov.compmatlab6.toSitePalette
 
 val FooterStyle = CssStyle.base {
     Modifier
-        .backgroundColor(colorMode.toSitePalette().nearBackground)
-        .padding(topBottom = 1.5.cssRem, leftRight = 10.percent)
+        .backgroundColor(colorMode.toSitePalette().cobweb)
+        .padding(topBottom = 1.cssRem, leftRight = 10.percent)
 }
 
 @Composable
@@ -32,21 +35,11 @@ fun Footer(modifier: Modifier = Modifier) {
     Box(FooterStyle.toModifier().then(modifier), contentAlignment = Alignment.Center) {
         Span(Modifier.textAlign(TextAlign.Center).toAttrs()) {
             val sitePalette = ColorMode.current.toSitePalette()
-            SpanText("Built with ")
+            SpanText("$MADE_BY_STR ")
             Link(
-                "https://github.com/varabyte/kobweb",
-                "Kobweb",
-                Modifier.setVariable(ColorVar, sitePalette.brand.primary),
-                variant = UncoloredLinkVariant
-            )
-            SpanText(", template designed by ")
-
-            // Huge thanks to UI Rocket (https://ui-rocket.com) for putting this great template design together for us!
-            // If you like what you see here and want help building your own site, consider checking out their services.
-            Link(
-                "https://ui-rocket.com",
-                "UI Rocket",
-                Modifier.setVariable(ColorVar, sitePalette.brand.accent).whiteSpace(WhiteSpace.NoWrap),
+                GITHUB_URI,
+                SOURCE_CODE_STR,
+                Modifier.setVariable(ColorVar, sitePalette.brand.primary).whiteSpace(WhiteSpace.NoWrap),
                 variant = UncoloredLinkVariant
             )
         }
