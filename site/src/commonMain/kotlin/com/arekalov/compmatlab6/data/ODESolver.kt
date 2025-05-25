@@ -3,6 +3,7 @@ package com.arekalov.compmatlab6.data
 import com.arekalov.compmatlab6.methods.adamsBashforth4
 import com.arekalov.compmatlab6.methods.estimateRungeError
 import com.arekalov.compmatlab6.methods.eulerMethod
+import com.arekalov.compmatlab6.methods.milneMethod
 import com.arekalov.compmatlab6.methods.rungeKutta4
 import com.arekalov.compmatlab6.model.Input
 import com.arekalov.compmatlab6.model.Point
@@ -29,12 +30,13 @@ object ODESolver {
                 input.n,
                 input.h
             )
-            SolutionMethod.ADAMS_BASHFORTH -> adamsBashforth4(
-            equation.odeFunction,
-            input.x0,
-            input.y0,
-            input.n,
-            input.h
+            SolutionMethod.MILN -> milneMethod(
+            f = equation.odeFunction,
+            x0 = input.x0,
+            y0 = input.y0,
+            n = input.n,
+            h = input.h,
+            eps = input.eps
         )
         }
 
