@@ -30,47 +30,63 @@ fun InputSection(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(1.cssRem),
         ) {
-            AppLabel("Ввод исходный данных:")
-            // Выбор уравнения
-            StringDropDown(
-                options = Equations.equations.map { it.name },
-                onSelect = { selected ->
-                    val idx = Equations.equations.indexOfFirst { it.name == selected }
-                    if (idx != -1) onInputChanged(input.copy(equationIndex = idx))
-                }
-            )
+            AppLabel("Ввод исходных данных:")
 
-            // Ввод числовых параметров
-            AppNumberField(
-                value = input.x0.toString(),
-                onValueChanged = { onInputChanged(input.copy(x0 = it.toDoubleOrNull() ?: 0.0)) }
-            )
-            AppNumberField(
-                value = input.y0.toString(),
-                onValueChanged = { onInputChanged(input.copy(y0 = it.toDoubleOrNull() ?: 0.0)) }
-            )
-            AppNumberField(
-                value = input.xn.toString(),
-                onValueChanged = { onInputChanged(input.copy(xn = it.toDoubleOrNull() ?: 0.0)) }
-            )
-            AppNumberField(
-                value = input.h.toString(),
-                onValueChanged = { onInputChanged(input.copy(h = it.toDoubleOrNull() ?: 0.0)) }
-            )
-            AppNumberField(
-                value = input.eps.toString(),
-                onValueChanged = { onInputChanged(input.copy(eps = it.toDoubleOrNull() ?: 0.0)) }
-            )
-
-            // Выбор метода решения
-            StringDropDown(
-                options = SolutionMethod.values().map { it.russianName },
-                onSelect = { selected ->
-                    val method = SolutionMethod.values().find { it.russianName == selected }
-                    if (method != null) onInputChanged(input.copy(solutionMethod = method))
-                }
-            )
-
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("Уравнение:")
+                StringDropDown(
+                    options = Equations.equations.map { it.name },
+                    onSelect = { selected ->
+                        val idx = Equations.equations.indexOfFirst { it.name == selected }
+                        if (idx != -1) onInputChanged(input.copy(equationIndex = idx))
+                    }
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("x₀:")
+                AppNumberField(
+                    value = input.x0.toString(),
+                    onValueChanged = { onInputChanged(input.copy(x0 = it.toDoubleOrNull() ?: 0.0)) }
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("y₀:")
+                AppNumberField(
+                    value = input.y0.toString(),
+                    onValueChanged = { onInputChanged(input.copy(y0 = it.toDoubleOrNull() ?: 0.0)) }
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("xₙ:")
+                AppNumberField(
+                    value = input.xn.toString(),
+                    onValueChanged = { onInputChanged(input.copy(xn = it.toDoubleOrNull() ?: 0.0)) }
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("h:")
+                AppNumberField(
+                    value = input.h.toString(),
+                    onValueChanged = { onInputChanged(input.copy(h = it.toDoubleOrNull() ?: 0.0)) }
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("ε:")
+                AppNumberField(
+                    value = input.eps.toString(),
+                    onValueChanged = { onInputChanged(input.copy(eps = it.toDoubleOrNull() ?: 0.0)) }
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
+                AppLabel("Метод:")
+                StringDropDown(
+                    options = SolutionMethod.values().map { it.russianName },
+                    onSelect = { selected ->
+                        val method = SolutionMethod.values().find { it.russianName == selected }
+                        if (method != null) onInputChanged(input.copy(solutionMethod = method))
+                    }
+                )
+            }
             // Кнопки
             Div(attrs = { style { marginTop(16.px) } }) {
                 AppButton(onClick = onClear) { AppText("Очистить") }
