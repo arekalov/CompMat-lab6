@@ -15,7 +15,7 @@ fun milneMethod(
     val y = mutableListOf<Double>()
     y.add(y0)
 
-    // Первые 3 точки методом Рунге-Кутты 4-го порядка
+    // Первые 3 точки методом Рунге-Кутта 4-го порядка
     for (i in 1..3) {
         val k1 = h * f(xs[i - 1], y[i - 1])
         val k2 = h * f(xs[i - 1] + h / 2, y[i - 1] + k1 / 2)
@@ -25,29 +25,20 @@ fun milneMethod(
     }
 
     for (i in 4..n) {
-        // Предиктор
-        val yp = y[i - 4] + 4 * h * (
-            2 * f(xs[i - 3], y[i - 3]) -
-            f(xs[i - 2], y[i - 2]) +
-            2 * f(xs[i - 1], y[i - 1])
-        ) / 3
+        // Предиктор Милна
+        val yp = y[i - 4] + (4 * h / 3) * (2 * f(xs[i - 3], y[i - 3]) - f(xs[i - 2], y[i - 2]) + 2 * f(xs[i - 1], y[i - 1]))
 
-        // Корректор
+        // Корректор Милна
+        var yc: Double
         var yNext = yp
-        while (true) {
-            val yc = y[i - 2] + h * (
-                f(xs[i - 2], y[i - 2]) +
-                4 * f(xs[i - 1], y[i - 1]) +
-                f(xs[i], yNext)
-            ) / 3
-            if (abs(yc - yNext) < eps) {
-                yNext = yc
-                break
-            }
+        do {
+            yc = y[i - 2] + (h / 3) * (f(xs[i - 2], y[i - 2]) + 4 * f(xs[i - 1], y[i - 1]) + f(xs[i], yNext))
+            if (abs(yc - yNext) < eps) break
             yNext = yc
-        }
+        } while (true)
+
         y.add(yNext)
     }
 
     return xs.zip(y).map { (x, yVal) -> Point(x, yVal) }
-} 
+}

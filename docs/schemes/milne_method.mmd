@@ -1,0 +1,31 @@
+graph TD
+    A(("Начало"))
+    B[/"Ввод: f, x0, y0, n, h, eps"/]
+    C["xs = []\n y = []"]
+    C1["Добавить y0 в y"]
+    X1["Добавить x0 в xs"]
+
+    FIRST-FOR{{"1 &lt;= i &lt;= 3"}}
+    KS["k1 = h * f(xs[i-1], y[i-1]) \n k2 = h * f(xs[i-1] + h/2, y[i-1] + k1/2) \n k3 = h * f(xs[i-1] + h/2, y[i-1] + k2/2) \n k4 = h * f(xs[i-1] + h, y[i-1] + k3)"]
+    Y-ADD["y.add(y[i-1] + (k1 + 2*k2 + 2*k3 + k4) / 6)"]
+
+    SECOND_FOR{{"4 &lt;= i &lt;= n"}}
+    YP["yp = y[i-4] + 4*h/3 * (2*f(xs[i-3], y[i-3]) - f(xs[i-2], y[i-2]) + 2*f(xs[i-1], y[i-1]))"]
+    Y_NEXT["yNext = yp"]
+
+    WHILE{{"true"}}
+    YC["yc = y[i-2] + h/3 * (f(xs[i-2], y[i-2]) + 4*f(xs[i-1], y[i-1]) + f(xs[i], yNext))"]
+    IF{"abs(yc - yNext) &lt; eps"}
+    ADD_Y_NEXT["Добавить yNext в y"]
+
+    Y_UPDATE["yNext = yc"]
+
+    J[/"Возврат xs.zip(y).map { (x, yVal) -&gt; Point(x, yVal) }"/]
+    K(("Конец"))
+
+    A --> B --> C --> C1 --> X1 --> FIRST-FOR -- true  --> KS --> Y-ADD --> FIRST-FOR -- false --> SECOND_FOR
+    SECOND_FOR --> YP --> Y_NEXT --> WHILE
+    WHILE --> YC --> IF
+    IF -- true --> ADD_Y_NEXT --> SECOND_FOR
+    IF -- false --> Y_UPDATE --> WHILE
+    SECOND_FOR -- false --> J --> K

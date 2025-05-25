@@ -1,0 +1,45 @@
+graph TD
+    A(("Начало"))
+    B[/"Ввод данных: f, x0, y0, xn, eps, solutionMethod"/]
+    C["Инициализация: \nn = 4, iters = 0, points = []"]
+    D{{"Цикл while: пока \n (инициализация или inaccuracy > eps) \n и iters < MAX_ITERS"}}
+
+    CHOICE{"Выбор метода решения"}
+    METHOD1["solutionMethod = EULER"]
+    METHOD2["solutionMethod = RUNGE_KUTTA"]
+    METHOD3["solutionMethod = MILN"]
+
+    RUN_EULER["points = eulerMethod(f, x0, y0, n, h)"]
+    RUN_RUNGE_KUTTA["points = rungeKutta4(f, x0, y0, n, h)"]
+    RUN_MILN["points = milneMethod(f, x0, y0, n, h, eps)"]
+
+    IF_PREV{"Есть предыдущие результаты?"}
+    COEF["Представьте p и coef для правила Рунге"]
+    CHECK_INACCURACY1["inaccuracy = (last y - prev last y) / coef"]
+    CHECK_INACCURACY2["inaccuracy = ∞"]
+
+    UPDATE["prevYs = points"]
+    DOUBLE_N["n *= 2"]
+    INC_ITER["iters++"]
+
+    CHECK_ERROR{"Error != null?"}
+    ERROR1["error = Max(|y_i - точное(y_i)|)"]
+    ERROR2["error = 0.0"]
+
+    RETURN_POINTS["Возврат точек: \n points + exactPoints"]
+    E(("Конец"))
+
+    A --> B --> C --> D --> CHOICE
+    CHOICE --> METHOD1 --> RUN_EULER --> IF_PREV
+    CHOICE --> METHOD2 --> RUN_RUNGE_KUTTA --> IF_PREV
+    CHOICE --> METHOD3 --> RUN_MILN --> CHECK_ERROR
+
+    IF_PREV -- true --> COEF --> CHECK_INACCURACY1 --> UPDATE --> D
+    IF_PREV -- false --> CHECK_INACCURACY2 --> UPDATE --> D
+
+    METHOD3 --> UPDATE --> DOUBLE_N --> CHECK_ERROR
+
+    CHECK_ERROR -- true --> ERROR1 --> INC_ITER --> D
+    CHECK_ERROR -- false --> ERROR2 --> INC_ITER --> D
+
+    D -- no loop --> RETURN_POINTS --> E
