@@ -31,7 +31,7 @@ class ODESolverViewModel {
         )
     )
     var result by mutableStateOf<Result?>(null)
-
+    var errorText by mutableStateOf<String?>(null)
 
     fun changeTheme(value: Boolean) {
         isDarkTheme = value
@@ -44,38 +44,54 @@ class ODESolverViewModel {
     }
 
     fun onCalculate() {
-        val solver = ODESolver
-        result = solver.solve(input)
-        graphManager.clearGraph()
-        result?.points?.let {
-            graphManager.plotPoints(
-                id = "points",
-                points = it,
-                colorValue = if (isDarkTheme) AppColors.primaryInversedString else AppColors.secondaryInversedString,
-                isLinesEnabled = true,
-                notShowPoints = false,
-            )
-        }
-        result?.exactPoints?.let {
-            graphManager.plotPoints(
-                id = "exact",
-                points = it,
-                colorValue = if (isDarkTheme) AppColors.successInversedString else AppColors.successString,
-                isLinesEnabled = true,
-                notShowPoints = true,
-            )
+        try {
+            val solver = ODESolver
+            val res = solver.solve(input)
+            // Проверка на NaN/Infinity
+            val hasInvalid = res.points.any { it.x.isNaN() || it.y.isNaN() || it.x.isInfinite() || it.y.isInfinite() }
+            if (hasInvalid) {
+                errorText =
+                    "В вычислениях получены некорректные значения (NaN или Infinity). Проверьте исходные данные."
+                result = null
+                graphManager.clearGraph()
+            } else {
+                errorText = null
+                result = res
+                graphManager.clearGraph()
+                result?.points?.let {
+                    graphManager.plotPoints(
+                        id = "points",
+                        points = it,
+                        colorValue = if (isDarkTheme) AppColors.primaryInversedString else AppColors.secondaryInversedString,
+                        isLinesEnabled = true,
+                        notShowPoints = false,
+                    )
+                }
+                result?.exactPoints?.let {
+                    graphManager.plotPoints(
+                        id = "exact",
+                        points = it,
+                        colorValue = if (isDarkTheme) AppColors.successInversedString else AppColors.successString,
+                        isLinesEnabled = true,
+                        notShowPoints = true,
+                    )
+                }
+            }
+        } catch (ex: Exception) {
+            errorText = ex.message
         }
     }
 
     fun onClear() {
         input = input.copy(
-            x0 = 0.0,
-            y0 = 0.0,
+            x0 = 1.0,
+            y0 = 1.0,
             xn = 10.0,
             h = 0.1,
             eps = 0.001
         )
         result = null
+        errorText = null
         graphManager.clearGraph()
     }
-} 
+}

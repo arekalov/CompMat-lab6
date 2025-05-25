@@ -12,20 +12,13 @@ import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
-import com.varabyte.kobweb.core.App
-import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.cssRem
-import org.jetbrains.compose.web.dom.Table
-import org.jetbrains.compose.web.dom.Tbody
-import org.jetbrains.compose.web.dom.Tr
-import org.jetbrains.compose.web.dom.Th
-import org.jetbrains.compose.web.dom.Td
 
 @Composable
 fun ResultSection(
     input: Input,
     result: Result?,
+    error: String?,
     isDarkTheme: Boolean,
     modifier: Modifier = Modifier,
 ) {
@@ -60,6 +53,10 @@ fun ResultSection(
                     text = result.exactPoints.joinToString(", ") { formatNumber(it.y, 4) },
                     color = if (isDarkTheme) AppColors.Success else AppColors.SuccessInversed
                 )
+            }
+
+            if (error?.isNotEmpty() == true) {
+                AppText("Ошибка: $error", color = AppColors.Error)
             }
         }
     }

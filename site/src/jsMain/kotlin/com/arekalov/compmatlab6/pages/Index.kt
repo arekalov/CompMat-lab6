@@ -52,6 +52,7 @@ fun Index() {
                     input = viewModel.input,
                     result = viewModel.result,
                     modifier = Modifier.fillMaxWidth(),
+                    error = viewModel.errorText,
                     isDarkTheme = viewModel.isDarkTheme,
                 )
             }
