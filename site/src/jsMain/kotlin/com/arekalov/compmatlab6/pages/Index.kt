@@ -14,6 +14,7 @@ import com.varabyte.kobweb.core.Page
 import org.jetbrains.compose.web.css.cssRem
 import com.arekalov.compmatlab6.common.*
 import com.arekalov.compmatlab6.components.sections.InputSection
+import com.arekalov.compmatlab6.components.sections.ResultSection
 import com.arekalov.compmatlab6.viewmodel.ODESolverViewModel
 
 
@@ -42,10 +43,15 @@ fun Index() {
             ) {
                 InputSection(
                     input = viewModel.input,
-                    onClear = {},
-                    onCalculate = {},
-                    onInputChanged = {},
+                    onClear = viewModel::onClear,
+                    onCalculate = viewModel::onCalculate,
+                    onInputChanged = viewModel::onInputChanged,
                     modifier = Modifier.fillMaxWidth()
+                )
+                ResultSection(
+                    input = viewModel.input,
+                    result = viewModel.result,
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
 

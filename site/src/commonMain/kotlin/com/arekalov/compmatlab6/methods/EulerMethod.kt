@@ -6,7 +6,7 @@ fun eulerMethod(
     f: (Double, Double) -> Double,
     x0: Double,
     y0: Double,
-    xn: Double,
+    n: Int,
     h: Double
 ): List<Point> {
     val result = mutableListOf<Point>()
@@ -14,7 +14,7 @@ fun eulerMethod(
     var y = y0
     result.add(Point(x, y))
 
-    while (x < xn) {
+    for (i in 1..n) {
         y += h * f(x, y)
         x += h
         result.add(Point(x, y))
