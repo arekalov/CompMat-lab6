@@ -40,7 +40,7 @@ fun InputSection(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(1.cssRem),
         ) {
-            AppText("Ввод исходных данных:", fontSize = 1.5)
+            AppText("Ввод исходных данных:", fontSize = 1.5, color = AppColors.Primary)
 
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
                 AppLabel("Уравнение:")
@@ -125,14 +125,14 @@ fun InputSection(
             // Кнопки
             Div(attrs = { style { marginTop(16.px) } }) {
                 AppButton(onClick = {
-                    x0Text = ""
-                    y0Text = ""
-                    nText = ""
-                    hText = ""
-                    epsText = ""
+                    x0Text = "0"
+                    y0Text = "0"
+                    nText = "10"
+                    hText = "0.1"
+                    epsText = "0.001"
                     errorText = null
                     onClear()
-                }) { AppText("Очистить") }
+                }) { AppText("Очистить", color = AppColors.Primary) }
                 AppButton(onClick = {
                     // Валидация
                     val x0Valid = x0Text.toDoubleOrNull() != null
@@ -153,7 +153,7 @@ fun InputSection(
                     if (errorText == null) {
                         onCalculate()
                     }
-                }) { AppText("Вычислить") }
+                }) { AppText("Вычислить", color = AppColors.Primary) }
             }
         }
     }

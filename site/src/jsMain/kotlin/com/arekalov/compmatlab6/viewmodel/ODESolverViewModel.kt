@@ -3,17 +3,21 @@ package com.arekalov.compmatlab6.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.arekalov.compmatlab6.components.widgets.AppColors
 import com.arekalov.compmatlab6.data.GraphManager
 import com.arekalov.compmatlab6.data.ODESolver
 import com.arekalov.compmatlab6.model.Input
 import com.arekalov.compmatlab6.model.Result
 import com.arekalov.compmatlab6.model.SolutionMethod
+import com.varabyte.kobweb.core.App
 
 class ODESolverViewModel {
     // Менеджер графика
     private val graphManager = GraphManager().apply {
         initGraph()
     }
+
+    var isDarkTheme by mutableStateOf(true)
 
     var input by mutableStateOf(
         Input(
@@ -28,6 +32,12 @@ class ODESolverViewModel {
     )
     var result by mutableStateOf<Result?>(null)
 
+
+    fun changeTheme(value: Boolean) {
+        isDarkTheme = value
+        graphManager.setTheme(isDarkTheme)
+    }
+
     // Методы для секций
     fun onInputChanged(newInput: Input) {
         input = newInput
@@ -37,10 +47,23 @@ class ODESolverViewModel {
         val solver = ODESolver
         result = solver.solve(input)
         graphManager.clearGraph()
-        result?.points?.let { graphManager.plotPoints(it) }
-        result?.exactPoints?.takeIf { it.isNotEmpty() }?.let {
-            val latex = "y=" + it.joinToString(",") { p -> "(${p.x},${p.y})" }
-            graphManager.plotFunction(latex, color = "#00C853", hidden = false)
+        result?.points?.let {
+            graphManager.plotPoints(
+                id = "points",
+                points = it,
+                colorValue = if (isDarkTheme) AppColors.primaryInversedString else AppColors.secondaryInversedString,
+                isLinesEnabled = true,
+                notShowPoints = false,
+            )
+        }
+        result?.exactPoints?.let {
+            graphManager.plotPoints(
+                id = "exact",
+                points = it,
+                colorValue = if (isDarkTheme) AppColors.successInversedString else AppColors.successString,
+                isLinesEnabled = true,
+                notShowPoints = true,
+            )
         }
     }
 

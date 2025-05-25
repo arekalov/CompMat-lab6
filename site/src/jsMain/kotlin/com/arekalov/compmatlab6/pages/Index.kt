@@ -24,7 +24,7 @@ fun Index() {
     val viewModel = ODESolverViewModel()
     PageLayout(
         title = PAGE_TITLE,
-        onThemeChanged = {},
+        onThemeChanged = viewModel::changeTheme,
     ) {
         Row(
             modifier = Modifier
@@ -52,6 +52,7 @@ fun Index() {
                     input = viewModel.input,
                     result = viewModel.result,
                     modifier = Modifier.fillMaxWidth(),
+                    isDarkTheme = viewModel.isDarkTheme,
                 )
             }
 

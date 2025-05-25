@@ -13,7 +13,7 @@ fun AppText(
     text: String,
     modifier: Modifier = Modifier,
     fontSize: Double = 1.0,
-    color: Color = AppColors.Primary
+    color: Color = AppColors.Secondary
 ) {
     SpanText(
         text = text,
