@@ -42,4 +42,7 @@
 3. Для выхода нажать `Q`
 
 ## Демо
+![img.png](docs/imgs/img.png)
+![img.png](docs/imgs/img2.png)
+![img.png](docs/imgs/img3.png)
 
