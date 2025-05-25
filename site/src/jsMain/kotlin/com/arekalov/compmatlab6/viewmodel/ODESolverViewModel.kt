@@ -3,13 +3,13 @@ package com.arekalov.compmatlab6.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.arekalov.compmatlab6.common.Strings
 import com.arekalov.compmatlab6.components.widgets.AppColors
 import com.arekalov.compmatlab6.data.GraphManager
 import com.arekalov.compmatlab6.data.ODESolver
 import com.arekalov.compmatlab6.model.Input
 import com.arekalov.compmatlab6.model.Result
 import com.arekalov.compmatlab6.model.SolutionMethod
-import com.varabyte.kobweb.core.App
 
 class ODESolverViewModel {
     // Менеджер графика
@@ -50,8 +50,7 @@ class ODESolverViewModel {
             // Проверка на NaN/Infinity
             val hasInvalid = res.points.any { it.x.isNaN() || it.y.isNaN() || it.x.isInfinite() || it.y.isInfinite() }
             if (hasInvalid) {
-                errorText =
-                    "В вычислениях получены некорректные значения (NaN или Infinity). Проверьте исходные данные."
+                errorText = Strings.NAN_OR_INF
                 result = null
                 graphManager.clearGraph()
             } else {

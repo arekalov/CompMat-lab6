@@ -1,6 +1,7 @@
 package com.arekalov.compmatlab6.components.sections
 
 import androidx.compose.runtime.Composable
+import com.arekalov.compmatlab6.common.Strings
 import com.arekalov.compmatlab6.common.formatNumber
 import com.arekalov.compmatlab6.components.widgets.AppColors
 import com.arekalov.compmatlab6.components.widgets.AppLabel
@@ -27,28 +28,28 @@ fun ResultSection(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(1.cssRem),
         ) {
-            AppText("Результаты вычислений", fontSize = 1.5, color = AppColors.Primary)
+            AppText(Strings.RESULTS_TITLE, fontSize = 1.5, color = AppColors.Primary)
 
             if (result == null) {
-                AppText("Нет данных для отображения.", color = AppColors.Secondary)
+                AppText(Strings.NO_DATA, color = AppColors.Secondary)
             } else {
 
                 // Погрешность
-                AppText("Погрешность по Рунге: ${result.error}")
-                AppText("Фактическое количество разбиений n: ${result.actualN}")
+                AppText("${Strings.ERROR_RUNGE} ${result.error}")
+                AppText("${Strings.ACTUAL_N} ${result.actualN}")
 
                 // Исходные данные
-                AppLabel("Исходные данные:")
-                AppText("x₀ = ${input.x0}, y₀ = ${input.y0}, h = ${input.h}, ε = ${input.eps}")
+                AppLabel(Strings.INITIAL_DATA)
+                AppText("${Strings.X0.dropLast(1)} = ${input.x0}, ${Strings.Y0.dropLast(1)} = ${input.y0}, ${Strings.H} = ${input.h}, ${Strings.EPS} = ${input.eps}")
 
                 // Таблица точек
-                AppLabel("y", color = if (isDarkTheme) AppColors.Primary else AppColors.PrimaryInversed)
+                AppLabel(Strings.Y, color = if (isDarkTheme) AppColors.Primary else AppColors.PrimaryInversed)
                 AppText(
                     text = result.points.joinToString(", ") { formatNumber(it.y, 4) },
                     color = if (isDarkTheme) AppColors.Primary else AppColors.PrimaryInversed
                 )
 
-                AppLabel("y_точн", color = if (isDarkTheme) AppColors.Success else AppColors.SuccessInversed)
+                AppLabel(Strings.Y_EXACT, color = if (isDarkTheme) AppColors.Success else AppColors.SuccessInversed)
                 AppText(
                     text = result.exactPoints.joinToString(", ") { formatNumber(it.y, 4) },
                     color = if (isDarkTheme) AppColors.Success else AppColors.SuccessInversed
@@ -56,7 +57,7 @@ fun ResultSection(
             }
 
             if (error?.isNotEmpty() == true) {
-                AppText("Ошибка: $error", color = AppColors.Error)
+                AppText("${Strings.ERROR}: $error", color = AppColors.Error)
             }
         }
     }

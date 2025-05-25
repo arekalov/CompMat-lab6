@@ -1,7 +1,7 @@
 package com.arekalov.compmatlab6.components.sections
 
 import androidx.compose.runtime.*
-import com.arekalov.compmatlab6.common.StringResources
+import com.arekalov.compmatlab6.common.Strings
 import com.arekalov.compmatlab6.components.widgets.*
 import com.arekalov.compmatlab6.data.Equations
 import com.arekalov.compmatlab6.model.Input
@@ -12,7 +12,6 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxWidth
-import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.marginTop
 import org.jetbrains.compose.web.css.px
@@ -40,10 +39,10 @@ fun InputSection(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(1.cssRem),
         ) {
-            AppText("Ввод исходных данных:", fontSize = 1.5, color = AppColors.Primary)
+            AppText(Strings.INPUT_TITLE, fontSize = 1.5, color = AppColors.Primary)
 
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("Уравнение:")
+                AppLabel(Strings.EQUATION)
                 StringDropDown(
                     options = Equations.equations.map { it.name },
                     onSelect = { selected ->
@@ -53,7 +52,7 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("x₀:")
+                AppLabel(Strings.X0)
                 AppNumberField(
                     value = x0Text,
                     onValueChanged = { newValue ->
@@ -63,7 +62,7 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("y₀:")
+                AppLabel(Strings.Y0)
                 AppNumberField(
                     value = y0Text,
                     onValueChanged = { newValue ->
@@ -73,7 +72,7 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("xₙ:")
+                AppLabel(Strings.XN)
                 AppNumberField(
                     value = xnText,
                     onValueChanged = { newValue ->
@@ -83,7 +82,7 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("h:")
+                AppLabel(Strings.H)
                 AppNumberField(
                     value = hText,
                     onValueChanged = { newValue ->
@@ -93,7 +92,7 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("ε:")
+                AppLabel(Strings.EPS)
                 AppNumberField(
                     value = epsText,
                     onValueChanged = { newValue ->
@@ -103,7 +102,7 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("Метод:")
+                AppLabel(Strings.METHOD)
                 StringDropDown(
                     options = SolutionMethod.values().map { it.russianName },
                     onSelect = { selected ->
@@ -132,7 +131,7 @@ fun InputSection(
                     epsText = "0.001"
                     errorText = null
                     onClear()
-                }) { AppText("Очистить", color = AppColors.Primary) }
+                }) { AppText(Strings.CLEAR, color = AppColors.Primary) }
                 AppButton(onClick = {
                     // Валидация
                     val x0Valid = x0Text.toDoubleOrNull() != null
@@ -142,18 +141,18 @@ fun InputSection(
                     val epsValid = epsText.toDoubleOrNull()?.let { it > 0 } == true
 
                     errorText = when {
-                        !x0Valid -> "Некорректное значение x₀"
-                        !y0Valid -> "Некорректное значение y₀"
-                        !xnValid -> "Некорректное значение xₙ"
-                        !hValid -> "Шаг h должен быть положительным числом"
-                        !epsValid -> "Точность ε должна быть положительным числом"
+                        !x0Valid -> Strings.INVALID_X0
+                        !y0Valid -> Strings.INVALID_Y0
+                        !xnValid -> Strings.INVALID_XN
+                        !hValid -> Strings.INVALID_H
+                        !epsValid -> Strings.INVALID_EPS
                         else -> null
                     }
 
                     if (errorText == null) {
                         onCalculate()
                     }
-                }) { AppText("Вычислить", color = AppColors.Primary) }
+                }) { AppText(Strings.CALCULATE, color = AppColors.Primary) }
             }
         }
     }
