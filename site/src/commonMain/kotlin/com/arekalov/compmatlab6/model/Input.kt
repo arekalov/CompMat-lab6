@@ -6,5 +6,6 @@ data class Input(
     val y0: Double,
     val xn: Double,
     val h: Double,
-    val eps: Double
+    val eps: Double,
+    val solutionMethod: SolutionMethod
 )
