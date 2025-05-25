@@ -42,10 +42,11 @@ fun ResultSection(
 
                 // Погрешность
                 AppText("Погрешность по Рунге: ${result.error}")
+                AppText("Фактическое количество разбиений n: ${result.actualN}")
 
                 // Исходные данные
                 AppLabel("Исходные данные:")
-                AppText("x₀ = ${input.x0}, y₀ = ${input.y0}, n = ${input.n}, h = ${input.h}, ε = ${input.eps}")
+                AppText("x₀ = ${input.x0}, y₀ = ${input.y0}, h = ${input.h}, ε = ${input.eps}")
 
                 // Таблица точек
                 AppLabel("y", color = if (isDarkTheme) AppColors.Primary else AppColors.PrimaryInversed)

@@ -29,7 +29,7 @@ fun InputSection(
     // Локальные состояния для текстовых полей
     var x0Text by remember { mutableStateOf(input.x0.toString()) }
     var y0Text by remember { mutableStateOf(input.y0.toString()) }
-    var nText by remember { mutableStateOf(input.n.toString()) }
+    var xnText by remember { mutableStateOf(input.xn.toString()) }
     var hText by remember { mutableStateOf(input.h.toString()) }
     var epsText by remember { mutableStateOf(input.eps.toString()) }
     var errorText by remember { mutableStateOf<String?>(null) }
@@ -73,12 +73,12 @@ fun InputSection(
                 )
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(1.cssRem)) {
-                AppLabel("n:")
+                AppLabel("xₙ:")
                 AppNumberField(
-                    value = nText,
+                    value = xnText,
                     onValueChanged = { newValue ->
-                        nText = newValue
-                        newValue.toIntOrNull()?.let { onInputChanged(input.copy(n = it)) }
+                        xnText = newValue
+                        newValue.toDoubleOrNull()?.let { onInputChanged(input.copy(xn = it)) }
                     }
                 )
             }
@@ -125,9 +125,9 @@ fun InputSection(
             // Кнопки
             Div(attrs = { style { marginTop(16.px) } }) {
                 AppButton(onClick = {
-                    x0Text = "0"
-                    y0Text = "0"
-                    nText = "10"
+                    x0Text = "1"
+                    y0Text = "1"
+                    xnText = "10"
                     hText = "0.1"
                     epsText = "0.001"
                     errorText = null
@@ -137,14 +137,14 @@ fun InputSection(
                     // Валидация
                     val x0Valid = x0Text.toDoubleOrNull() != null
                     val y0Valid = y0Text.toDoubleOrNull() != null
-                    val nValid = nText.toIntOrNull()?.let { it > 0 } == true
+                    val xnValid = xnText.toDoubleOrNull() != null
                     val hValid = hText.toDoubleOrNull()?.let { it > 0 } == true
                     val epsValid = epsText.toDoubleOrNull()?.let { it > 0 } == true
 
                     errorText = when {
                         !x0Valid -> "Некорректное значение x₀"
                         !y0Valid -> "Некорректное значение y₀"
-                        !nValid -> "n должно быть положительным целым числом"
+                        !xnValid -> "Некорректное значение xₙ"
                         !hValid -> "Шаг h должен быть положительным числом"
                         !epsValid -> "Точность ε должна быть положительным числом"
                         else -> null

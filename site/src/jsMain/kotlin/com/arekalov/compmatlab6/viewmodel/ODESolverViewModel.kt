@@ -24,7 +24,7 @@ class ODESolverViewModel {
             equationIndex = 0,
             x0 = 0.0,
             y0 = 0.0,
-            n = 10,
+            xn = 10.0,
             h = 0.1,
             eps = 0.001,
             solutionMethod = SolutionMethod.EULER
@@ -71,7 +71,7 @@ class ODESolverViewModel {
         input = input.copy(
             x0 = 0.0,
             y0 = 0.0,
-            n = 10,
+            xn = 10.0,
             h = 0.1,
             eps = 0.001
         )
