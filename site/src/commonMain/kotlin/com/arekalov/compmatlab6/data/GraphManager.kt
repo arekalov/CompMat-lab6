@@ -1,6 +1,7 @@
 package com.arekalov.compmatlab6.data
 
-import com.arekalov.compmatlab6.models.Point
+import com.arekalov.compmatlab6.model.Point
+
 
 expect class GraphManager() {
     fun initGraph()
@@ -9,4 +10,4 @@ expect class GraphManager() {
     fun plotFunction(expression: String, color: String = "#0C24A4", hidden: Boolean = true)
     fun setTheme(isDark: Boolean)
     fun jsLog(value: String)
-} 
+}

@@ -13,12 +13,14 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.Page
 import org.jetbrains.compose.web.css.cssRem
 import com.arekalov.compmatlab6.common.*
+import com.arekalov.compmatlab6.components.sections.InputSection
+import com.arekalov.compmatlab6.viewmodel.ODESolverViewModel
 
 
 @Page
 @Composable
 fun Index() {
-//    val viewModel = ApproximationViewModel()
+    val viewModel = ODESolverViewModel()
     PageLayout(
         title = PAGE_TITLE,
         onThemeChanged = {},
@@ -38,7 +40,13 @@ fun Index() {
                     .overflow(Overflow.Auto),
                 verticalArrangement = Arrangement.spacedBy(1.cssRem)
             ) {
-
+                InputSection(
+                    input = viewModel.input,
+                    onClear = {},
+                    onCalculate = {},
+                    onInputChanged = {},
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
 
             // Правая колонка с графиком

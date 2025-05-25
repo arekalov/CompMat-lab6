@@ -30,12 +30,12 @@ class ODESolver {
                 input.h
             )
             SolutionMethod.ADAMS_BASHFORTH -> adamsBashforthMethod(
-                equation.odeFunction,
-                input.x0,
-                input.y0,
-                input.xn,
-                input.h
-            )
+            equation.odeFunction,
+            input.x0,
+            input.y0,
+            input.xn,
+            input.h
+        )
         }
 
         // Вычисляем точное решение, если оно есть

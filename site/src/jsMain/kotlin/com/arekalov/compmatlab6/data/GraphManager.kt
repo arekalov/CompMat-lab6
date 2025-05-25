@@ -1,6 +1,6 @@
 package com.arekalov.compmatlab6.data
 
-import com.arekalov.compmatlab6.models.Point
+import com.arekalov.compmatlab6.model.Point
 import kotlinx.browser.document
 import org.w3c.dom.HTMLScriptElement
 
