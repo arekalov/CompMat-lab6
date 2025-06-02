@@ -2,52 +2,56 @@ graph TD
 
     subgraph ZIP["Функция zip"]
         A1(("Начало"))
+        IN1[/"Вход: list1, list2"/]
         B1["size = minOf(list1.size, list2.size) \n result = []"]
         C1{{"for (i in 0 until size)"}}
         D1["$$result.add(Pair(list1_i, list2_i))$$"]
         E1[/"Возврат result"/]
         F1(("Конец"))
 
-        A1 --> B1 --> C1
+        A1 --> IN1 --> B1 --> C1
         C1 -- да --> D1 --> C1
         C1 -- нет --> E1 --> F1
     end
 
     subgraph SUMOF["Функция sumOf"]
         A2(("Начало"))
+        IN2[/"Вход: list, selector"/]
         B2["sum = 0.0"]
         C2{{"i = 0, i < n"}}
         D2["$$sum += selector_i$$"]
         E2["$$Возврат sum$$"]
         F2(("Конец"))
 
-        A2 --> B2 --> C2
+        A2 --> IN2 --> B2 --> C2
         C2 -- да --> D2 --> C2
         C2 -- нет --> E2 --> F2
     end
 
     subgraph MAXOF["Функция maxOf"]
         A3(("Начало"))
+        IN3[/"Вход: list, selector"/]
         B3["$$max = selector(list_i)$$"]
         C3{{"i = 0, i < list.size"}}
         D3["$$value = selector(list_i) if (value > max) max = value$$"]
         E3[/"Возврат max"/]
         F3(("Конец"))
 
-        A3 --> B3 --> C3
+        A3 --> IN3 --> B3 --> C3
         C3 -- да --> D3 --> C3
         C3 -- нет --> E3 --> F3
     end
 
     subgraph MAP["Функция map"]
         A4(("Начало"))
+        IN4[/"Вход: list, transform"/]
         B4["result = []"]
         C4{{"i = 0, i < list.size"}}
         D4["$$result.add(transform(list_i))$$"]
         E4[/"Возврат result"/]
         F4(("Конец"))
 
-        A4 --> B4 --> C4
+        A4 --> IN4 --> B4 --> C4
         C4 -- да --> D4 --> C4
         C4 -- нет --> E4 --> F4
     end
