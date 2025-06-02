@@ -2,7 +2,7 @@ graph TD
     A(("Начало"))
     B[/"Ввод данных: f, x0, y0, xn, eps, solutionMethod"/]
     C["Инициализация: \nn = 4, iters = 0, points = []"]
-    D{{"Цикл while: пока \n (инициализация или inaccuracy > eps) \n и iters < MAX_ITERS"}}
+    D{{"i=0, i < MAX_ITERS"}}
 
     CHOICE{"Выбор метода решения"}
     METHOD1["solutionMethod = EULER"]
