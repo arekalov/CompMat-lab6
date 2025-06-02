@@ -13,8 +13,7 @@ graph TD
     RUN_RUNGE_KUTTA["points = rungeKutta4(f, x0, y0, n, h)"]
     RUN_MILN["points = milneMethod(f, x0, y0, n, h, eps)"]
 
-    IF_PREV{"Есть предыдущие результаты?"}
-    COEF["Представьте p и coef для правила Рунге"]
+    IF_PREV{"points != prevYs"}
     CHECK_INACCURACY1["inaccuracy = (last y - prev last y) / coef"]
     CHECK_INACCURACY2["inaccuracy = ∞"]
 
@@ -22,11 +21,11 @@ graph TD
     DOUBLE_N["n *= 2"]
     INC_ITER["iters++"]
 
-    CHECK_ERROR{"Error != null?"}
+    CHECK_ERROR{"Error != null"}
     ERROR1["error = Max(|y_i - точное(y_i)|)"]
     ERROR2["error = 0.0"]
 
-    RETURN_POINTS["Возврат точек: \n points + exactPoints"]
+    RETURN_POINTS["Возврат: \n points + exactPoints"]
     E(("Конец"))
 
     A --> B --> C --> D --> CHOICE
@@ -34,7 +33,7 @@ graph TD
     CHOICE --> METHOD2 --> RUN_RUNGE_KUTTA --> IF_PREV
     CHOICE --> METHOD3 --> RUN_MILN --> CHECK_ERROR
 
-    IF_PREV -- true --> COEF --> CHECK_INACCURACY1 --> UPDATE --> D
+    IF_PREV -- true  --> CHECK_INACCURACY1 --> UPDATE --> D
     IF_PREV -- false --> CHECK_INACCURACY2 --> UPDATE --> D
 
     METHOD3 --> UPDATE --> DOUBLE_N --> CHECK_ERROR

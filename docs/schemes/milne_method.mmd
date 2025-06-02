@@ -6,15 +6,15 @@ graph TD
     X1["Добавить x0 в xs"]
 
     FIRST-FOR{{"i=1, i <= 3"}}
-    KS["k1 = h * f(xs[i-1], y[i-1]) \n k2 = h * f(xs[i-1] + h/2, y[i-1] + k1/2) \n k3 = h * f(xs[i-1] + h/2, y[i-1] + k2/2) \n k4 = h * f(xs[i-1] + h, y[i-1] + k3)"]
-    Y-ADD["y.add(y[i-1] + (k1 + 2*k2 + 2*k3 + k4) / 6)"]
+    KS["$$k1 = h * f(xs_{x-1}, y_{y-1})  k2 = h * f(xs_{i-1} + h/2, y_{y-1} + k1/2)  k3 = h * f(xs_{i-1} + h/2, y_{y-1} + k2/2)  k4 = h * f(xs_{i-1} + h, y_{i-1} + k3)$$"]
+    Y-ADD["$$y.add(y_{i-1} + (k1 + 2*k2 + 2*k3 + k4) / 6)$$"]
 
     SECOND_FOR{{"i=4, i < n"}}
-    YP["yp = y[i-4] + 4*h/3 * (2*f(xs[i-3], y[i-3]) - f(xs[i-2], y[i-2]) + 2*f(xs[i-1], y[i-1]))"]
+    YP["$$yp = y_{y-4} + 4*h/3 * (2*f(xs_{i-3}, y_{i-3}) - f(xs_{i-2}, y_{i-2}) + 2*f(xs_{i-1}, y_{y-1}))$$"]
     Y_NEXT["yNext = yp"]
 
     WHILE{{"true"}}
-    YC["yc = y[i-2] + h/3 * (f(xs[i-2], y[i-2]) + 4*f(xs[i-1], y[i-1]) + f(xs[i], yNext))"]
+    YC["$$yc = y_{i-2} + h/3 * (f(xs_{i-2}, y_{i-2}) + 4*f(xs_{i-1}, y_{i-1}) + f(xs_i, yNext))$$"]
     IF{"abs(yc - yNext) &lt; eps"}
     ADD_Y_NEXT["Добавить yNext в y"]
 
